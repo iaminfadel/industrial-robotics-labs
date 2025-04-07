@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<robot name="square_3dof_arm">
+  <!-- Colors for visualization -->
+  <material name="blue">
+    <color rgba="0.0 0.0 0.8 1.0"/>
+  </material>
+  <material name="red">
+    <color rgba="0.8 0.0 0.0 1.0"/>
+  </material>
+  <material name="green">
+    <color rgba="0.0 0.8 0.0 1.0"/>
+  </material>
+  <material name="grey">
+    <color rgba="0.5 0.5 0.5 1.0"/>
+  </material>
+
+  <!-- Base Link -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.15 0.15 0.05"/>
+      </geometry>
+      <material name="grey"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.15 0.15 0.05"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1.0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/>
+    </inertial>
+  </link>
+
+  <!-- Joint 1: Rotates around global Z -->
+  <joint name="joint1" type="revolute">
+    <parent link="base_link"/>
+    <child link="link1"/>
+    <origin xyz="0 0 0.025" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14" upper="3.14" effort="100" velocity="1.0"/>
+  </joint>
+
+  <!-- Link 1 -->
+  <link name="link1">
+    <visual>
+      <geometry>
+        <box size="0.05 0.05 0.2"/>
+      </geometry>
+      <origin xyz="0 0 0.1" rpy="0 0 0"/>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.05 0.05 0.2"/>
+      </geometry>
+      <origin xyz="0 0 0.1" rpy="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="0.5"/>
+      <origin xyz="0 0 0.1" rpy="0 0 0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.0005"/>
+    </inertial>
+  </link>
+
+  <!-- Joint 2: Rotates around Y axis (pitch) -->
+  <joint name="joint2" type="revolute">
+    <parent link="link1"/>
+    <child link="link2"/>
+    <origin xyz="0 0 0.2" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.57" upper="1.57" effort="100" velocity="1.0"/>
+  </joint>
+
+  <!-- Link 2 -->
+  <link name="link2">
+    <visual>
+      <geometry>
+        <box size="0.05 0.05 0.15"/>
+      </geometry>
+      <origin xyz="0 0 0.075" rpy="0 0 0"/>
+      <material name="red"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.05 0.05 0.15"/>
+      </geometry>
+      <origin xyz="0 0 0.075" rpy="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="0.5"/>
+      <origin xyz="0 0 0.075" rpy="0 0 0"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.0005"/>
+    </inertial>
+  </link>
+
+  <!-- Joint 3: Rotates around Y axis (pitch) -->
+  <joint name="joint3" type="revolute">
+    <parent link="link2"/>
+    <child link="link3"/>
+    <origin xyz="0 0 0.15" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.57" upper="1.57" effort="100" velocity="1.0"/>
+  </joint>
+
+  <!-- Link 3 -->
+  <link name="link3">
+    <visual>
+      <geometry>
+        <box size="0.05 0.05 0.15"/>
+      </geometry>
+      <origin xyz="0 0 0.075" rpy="0 0 0"/>
+      <material name="green"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.05 0.05 0.15"/>
+      </geometry>
+      <origin xyz="0 0 0.075" rpy="0 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="0.3"/>
+      <origin xyz="0 0 0.075" rpy="0 0 0"/>
+      <inertia ixx="0.0005" ixy="0.0" ixz="0.0" iyy="0.0005" iyz="0.0" izz="0.0001"/>
+    </inertial>
+  </link>
+
+  <!-- End-effector (block) -->
+  <joint name="end_effector_joint" type="fixed">
+    <parent link="link3"/>
+    <child link="end_effector"/>
+    <origin xyz="0 0 0.15" rpy="0 0 0"/>
+  </joint>
+
+  <link name="end_effector">
+    <visual>
+      <geometry>
+        <box size="0.03 0.03 0.03"/>
+      </geometry>
+      <material name="grey"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.03 0.03 0.03"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001"/>
+    </inertial>
+  </link>
+</robot>
